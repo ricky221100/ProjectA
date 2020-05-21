@@ -1,3 +1,22 @@
 {
-
+  "coin": [
+    {
+      "id": 1,
+      "value": "10",
+      "name": "riccardo",
+      "description": "xxxx"
+    },
+    {
+      "id": 2,
+      "value": "20",
+      "name": "sofia",
+      "description": "xxxx"
+    },
+    {
+      "id": 3,
+      "value": "30",
+      "name": "zio_luca",
+      "description": "xxxx"
+    }
+  ]
 }
