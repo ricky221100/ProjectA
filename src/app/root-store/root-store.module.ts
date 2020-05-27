@@ -8,6 +8,7 @@ import {environment} from '../../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {SlideMenuStoreModule} from '@root-store/slide-menu-store';
 import { CoinStoreModule } from '@root-store/coin-store';
+import { FabricObjStoreModule } from '@root-store/fabric-obj-store';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { CoinStoreModule } from '@root-store/coin-store';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     CoinStoreModule,
+    FabricObjStoreModule,
   ],
   declarations: []
 })

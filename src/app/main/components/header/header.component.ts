@@ -15,12 +15,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
     </div>
   `,
   styles: [`
-    .fa-button:hover {
-      opacity: 0.5;
-      transition: transform 0.2s;
-      /*transform: scale(1.1);*/
-      cursor: pointer; cursor: hand;
-    }
+
   `],
   encapsulation: ViewEncapsulation.None
 })
