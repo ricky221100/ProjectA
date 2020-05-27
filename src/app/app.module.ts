@@ -17,8 +17,8 @@ import {BreadcrumbModule} from '@components/breadcrumb/breadcrumb.module';
 import {ClickOutsideModule} from '@core/directive/click-outside-directive';
 import {CardModule} from 'primeng/card';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+import {environment} from '../environments/environment';
 
-const config: SocketIoConfig = {url: '/', options: {}};
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ const config: SocketIoConfig = {url: '/', options: {}};
     BreadcrumbModule,
     ClickOutsideModule,
     CardModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(environment.socketIoConfig)
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent]
