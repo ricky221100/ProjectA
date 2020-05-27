@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  webServiceUri: 'http://localhost:3000/api/v1/',
-  socketIoConfig: {url: 'http://localhost:3000', options: {}}
+  webServiceUri: '/api/v1/',
+  socketIoConfig: {url: '/', options: {}}
 };
 
 /*
