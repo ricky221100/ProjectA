@@ -7,19 +7,15 @@ import {debounceTime, distinctUntilChanged, map, pairwise, startWith} from 'rxjs
 import {Subscription} from 'rxjs';
 import {Point} from 'fabric/fabric-impl';
 import * as _ from 'lodash';
-import {FabricObj, randomFabricObj} from '@models/vo/fabric-obj';
+import {FabricObj, getDifference, randomFabricObj} from '@models/vo/fabric-obj';
 
 @Component({
   selector: 'app-my-fabric-main',
   template: `
     <div #container class="h-100 w-100">
-      <div class="tools">
-        <em class="tool fa-button fas fa-project-diagram fa-2x p-2" (click)="newRectagle()"></em>
-        <em class="tool fa-button fas fa-project-diagram fa-2x p-2"></em>
-        <em class="tool fa-button fas fa-project-diagram fa-2x p-2"></em>
-        <em class="tool fa-button fas fa-project-diagram fa-2x p-2"></em>
-        <em class="tool fa-button fas fa-project-diagram fa-2x p-2"></em>
-      </div>
+      <ul>
+        <li class="tool fa-button fas fa-project-diagram fa-2x p-2" (click)="newRectagle()">new Rect</li>
+      </ul>
       <canvas id="canvas"></canvas>
     </div>
   `,
@@ -30,7 +26,7 @@ import {FabricObj, randomFabricObj} from '@models/vo/fabric-obj';
 
     .tools {
       width: 200px;
-      height: 200px;
+      height: 40px;
       border: solid #999999 1px;
     }
 
@@ -43,6 +39,7 @@ import {FabricObj, randomFabricObj} from '@models/vo/fabric-obj';
 })
 export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentInit {
 
+  itemTest;
   slideMenuOpen: Subscription;
   canvas: fabric.Canvas;
   @ViewChild('container', {static: true}) container;
@@ -52,14 +49,14 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   calculateSize: (canvas) => void = debounce((canvas) => {
-    console.log('.calculateSize()');
+    // console.log('.calculateSize()');
     const {left, top} = this.container.nativeElement.getBoundingClientRect();
     const footerHeight = 24;
     const footerRight = 4;
     const height = window.innerHeight - top - footerHeight;
     const width = window.innerWidth - left - footerRight;
     canvas.setDimensions({height, width});
-    this.setGrid(this.canvas, {width: 800, height: 600});
+    // this.setGrid(this.canvas, {width: 800, height: 600});
   }, 100, false);
 
   setGrid = _.memoize((canvas, {width, height}, gridSize = 32, lineStroke = '#C5C9CB') => {
@@ -99,34 +96,13 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   ngAfterContentInit(): void {
-    console.log('MyFabricMainComponent.ngAfterContentInit()');
+    // console.log('MyFabricMainComponent.ngAfterContentInit()');
     this.canvas = new fabric.Canvas('canvas', {backgroundColor: '#f3f3f3'});
     this.calculateSize(this.canvas);
 
     this.setPan(this.canvas);
     this.setZoom(this.canvas);
     this.setEdit(this.canvas);
-
-    // this.canvas.add(
-    //  new fabric.Rect({
-    //   left: 64,
-    //   top: 64,
-    //   fill: 'red',
-    //   width: 32,
-    //   height: 32
-    // }));
-
-    // this.canvas.add(
-    //   new fabric.Rect({
-    //     left: 64,
-    //     top: 64,
-    //     fill: 'red',
-    //     width: 32,
-    //     height: 32
-    //   })
-    // );
-
-    console.log(JSON.stringify(this.canvas));
 
     const obj = {
       version: '3.6.3',
@@ -137,26 +113,56 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
     this.store$.pipe(
       select(FabricObjStoreSelectors.selectAll),
       startWith([]), // emitting first empty value to fill-in the buffer
+      // map(objects => ({...obj, objects})),
       pairwise(),
       map(([previousValue, currentValue]) => {
+        console.log('map', previousValue, currentValue);
+        // this.canvas.remove(...this.canvas.getObjects());
+        const previousValueMap = previousValue.reduce((prev, curr) => ({...prev, [curr.id]: curr}), new FabricObj());
+        const currentValueMap = currentValue.reduce((prev, curr) => ({...prev, [curr.id]: curr}), new FabricObj());
+        const added = currentValue.filter(item => !previousValueMap[item.id]);
+        const edited = currentValue
+          .filter(item => !!previousValueMap[item.id] && previousValueMap[item.id] !== item)
+          .map(({id}) => {
+            console.log(previousValueMap[id].left + ' - ' + currentValueMap[id].left);
+            return getDifference(previousValueMap[id], currentValueMap[id]);
+          });
 
-        const previousValueE = previousValue.reduce((prev, curr) => ({...prev, [curr.id]: curr}), new FabricObj());
-        currentValue.forEach(item => {
-          const result = (previousValueE[item.id] === item);
-          console.log('item.id: ' + item.id + result);
+        console.log('edited', edited);
+
+        const editedMap = edited.reduce((prev, curr) => ({...prev, [curr.id]: curr}), {});
+        const deleted = previousValue.filter(item => !currentValueMap[item.id]);
+        const deletedMap = deleted.reduce((prev, curr) => ({...prev, [curr.id]: curr}), {});
+        const objectsMap = this.canvas.getObjects().reduce((prev, curr) => ({...prev, [(curr as any).id]: curr}), {});
+
+        // rimuovo gli elementi cancellati e modificati
+        const deletedObj = [...deleted, ...edited].filter(item => objectsMap[item.id]);
+
+
+        edited.forEach(item => {
+          // console.log('item.id', item.id);
+          objectsMap[item.id].set(item);
+          objectsMap[item.id].setCoords();
         });
+
+        // added.forEach(value => console.log(value.id));
+        // edited.forEach(value => console.log(value.id));
+        // deleted.forEach(value => console.log(value.id));
+        // aggiungo gli elementi creati e quelli modificati (gli elementi modificati vengono rimossi in precedenza)
+
+        if (added.length > 0) {
+          fabric.util.enlivenObjects([...added], (objects) => {
+            // console.log(objects);
+            objects.forEach((o) => {
+              this.canvas.add(o);
+            });
+          }, '');
+        }
+        this.canvas.renderAll();
+
         return currentValue;
       }),
-      map(objects => ({...obj, objects}))
-    ).subscribe(
-      next => {
-        this.canvas.loadFromJSON(next, null, null);
-        const result = this.canvas.getObjects().filter(
-          value => !!value['id']
-        ).map(value => value['id']);
-        console.log('result', result);
-      }
-    );
+    ).subscribe();
 
     this.store$.dispatch(FabricObjStoreActions.SearchRequest({queryParams: {}}));
 
@@ -175,10 +181,11 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
         e.target.opacity = 0.5;
       },
       'object:modified': (e) => {
-        console.log('MyFabricMainComponent.object:modified()');
-        console.log('e', e);
+        // console.log('MyFabricMainComponent.object:modified()');
+        // console.log('e', e);
         e.target.opacity = 1;
         const item = e.target.toJSON();
+        console.log('MyFabricMainComponent.object:modified()');
         this.store$.dispatch(FabricObjStoreActions.EditRequest({item}));
       }
     });
