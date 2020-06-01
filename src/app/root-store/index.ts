@@ -7,5 +7,4 @@ export {RootStoreState, RootStoreSelectors, RootStoreModule};
 export * from './router-store';
 export * from './slide-menu-store';
 
-export * from './coin-store';
 export * from './fabric-obj-store';

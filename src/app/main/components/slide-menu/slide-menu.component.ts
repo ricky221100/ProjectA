@@ -62,24 +62,7 @@ export class SlideMenuComponent implements OnInit, OnDestroy {
             }
           }));
         }
-      },
-      {
-        label: 'Coni',
-        icon: 'pi pi-pw pi-file',
-        command: (event$) => {
-          // invoco il router per cambiare pagina
-          this.store$.dispatch(RouterStoreActions.RouterGo({path: ['coin']}));
-
-          // salvo nello store del menù l'elemento selezionato.
-          this.store$.dispatch(SlideMenuStoreActions.Select({
-            item: {
-              data: {},
-              breadcrumb: ['Coin']
-            }
-          }));
-        }
-      },
-
+      }
     ];
     this.items = items;
     this.store$.dispatch(SlideMenuStoreActions.Select({

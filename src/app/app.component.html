@@ -12,11 +12,6 @@
     </div>
     <div #layoutMain class="layout-main" [ngClass]="open?'layout-main-menu-opened':''">
       <div class="p-1">
-        <p-card>
-          <app-breadcrumb></app-breadcrumb>
-        </p-card>
-      </div>
-      <div class="p-1">
         <router-outlet></router-outlet>
       </div>
       <app-footer></app-footer>

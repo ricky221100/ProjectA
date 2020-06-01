@@ -7,18 +7,20 @@ import {HomeRoutingModule} from './home-routing.module';
 import {PanelModule} from 'primeng/panel';
 import {ChartModule} from 'primeng/chart';
 import {CardModule} from 'primeng/card';
+import {MyFabricModule} from '@core/my-fabric/my-fabric.module';
 
 @NgModule({
   declarations: [HomeMainComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HomeRoutingModule,
-    PanelModule,
-    ChartModule,
-    CardModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HomeRoutingModule,
+        PanelModule,
+        ChartModule,
+        CardModule,
+        MyFabricModule
+    ],
   providers: [],
   entryComponents: []
 })

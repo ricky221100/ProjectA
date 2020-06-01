@@ -8,14 +8,13 @@ import {Subscription} from 'rxjs';
 import {Point} from 'fabric/fabric-impl';
 import * as _ from 'lodash';
 import {FabricObj, getDifference, randomFabricObj} from '@models/vo/fabric-obj';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-my-fabric-main',
   template: `
     <div #container class="h-100 w-100">
-      <ul>
-        <li class="tool fa-button fas fa-project-diagram fa-2x p-2" (click)="newRectagle()">new Rect</li>
-      </ul>
+      <p-menubar [model]="menuItems"></p-menubar>
       <canvas id="canvas"></canvas>
     </div>
   `,
@@ -39,6 +38,7 @@ import {FabricObj, getDifference, randomFabricObj} from '@models/vo/fabric-obj';
 })
 export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentInit {
 
+  menuItems: MenuItem[];
   itemTest;
   slideMenuOpen: Subscription;
   canvas: fabric.Canvas;
@@ -80,6 +80,7 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
   });
 
   ngOnInit() {
+    this.setMenu();
     // Save additional attributes in Serialization
     fabric.Object.prototype.toObject = (function(toObject) {
       return function(properties) {
@@ -125,6 +126,7 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
           .filter(item => !!previousValueMap[item.id] && previousValueMap[item.id] !== item)
           .map(({id}) => {
             console.log(previousValueMap[id].left + ' - ' + currentValueMap[id].left);
+            // questo metodo ritorna sologli attributi che che sono cambiati.
             return getDifference(previousValueMap[id], currentValueMap[id]);
           });
 
@@ -248,6 +250,16 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
     });
   }
 
+  setMenu() {
+    this.menuItems = [
+      {
+        label: 'New',
+        items: [
+          {label: 'Rect', command: () => this.newRectagle()},
+        ]
+      }
+    ];
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -256,7 +268,9 @@ export class MyFabricMainComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   newRectagle() {
+    console.log('MyFabricMainComponent.newRectagle()');
     const item = randomFabricObj();
+    console.log('item', item);
     this.store$.dispatch(FabricObjStoreActions.CreateRequest({item}));
   }
 
