@@ -1,4 +1,41 @@
 {
   "fabric-obj": [
+    {
+      "type": "rect",
+      "version": "3.6.3",
+      "originX": "left",
+      "originY": "top",
+      "left": 141,
+      "top": 115.09,
+      "width": 47,
+      "height": 18,
+      "fill": "#A82FB1",
+      "stroke": null,
+      "strokeWidth": 1,
+      "strokeDashArray": null,
+      "strokeLineCap": "butt",
+      "strokeDashOffset": 0,
+      "strokeLineJoin": "miter",
+      "strokeMiterLimit": 4,
+      "scaleX": 5.98,
+      "scaleY": 14.53,
+      "angle": 0,
+      "flipX": false,
+      "flipY": false,
+      "opacity": 1,
+      "shadow": null,
+      "visible": true,
+      "clipTo": null,
+      "backgroundColor": "",
+      "fillRule": "nonzero",
+      "paintFirst": "fill",
+      "globalCompositeOperation": "source-over",
+      "transformMatrix": null,
+      "skewX": 0,
+      "skewY": 0,
+      "rx": 0,
+      "ry": 0,
+      "id": 1
+    }
   ]
 }

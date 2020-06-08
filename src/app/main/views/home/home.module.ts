@@ -8,9 +8,10 @@ import {PanelModule} from 'primeng/panel';
 import {ChartModule} from 'primeng/chart';
 import {CardModule} from 'primeng/card';
 import {MyFabricModule} from '@core/my-fabric/my-fabric.module';
+import { DiceComponent } from './dice/dice.component';
 
 @NgModule({
-  declarations: [HomeMainComponent],
+  declarations: [HomeMainComponent, DiceComponent],
     imports: [
         CommonModule,
         FormsModule,

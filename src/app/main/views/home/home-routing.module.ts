@@ -1,16 +1,22 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeMainComponent} from './home-main/home-main.component';
+import {DiceComponent} from '@views/home/dice/dice.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'main',
+    redirectTo: 'dice',
     pathMatch: 'full'
   },
   {
-    path: 'main',
+    path: 'home',
     component: HomeMainComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'dice',
+    component: DiceComponent,
     pathMatch: 'full'
   }
 ];

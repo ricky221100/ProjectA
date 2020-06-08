@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {RootStoreState} from '@root-store/index';
-import {MyDice} from './my-dice';
-import {AngularLogo} from '@views/home/home-main/angular-logo';
 
 @Component({
   selector: 'app-home-main',
