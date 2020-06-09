@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AngularLogo} from '@views/home/dice/angular-logo';
 
 @Component({
   selector: 'app-dice',
-  templateUrl: './dice.component.html',
-  styleUrls: ['./dice.component.css']
+  template: `
+    <canvas id="main-canvas"></canvas>`,
+  styles: [``]
 })
 export class DiceComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    new AngularLogo();
   }
 
 }
