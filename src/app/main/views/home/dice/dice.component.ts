@@ -1,11 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularLogo} from '@views/home/dice/angular-logo';
+import {DiceManager} from '@views/home/dice/dice-manager';
 
 @Component({
   selector: 'app-dice',
   template: `
     <canvas id="main-canvas"></canvas>`,
-  styles: [``]
+  styles: [`
+    #main-canvas {
+      position: static;
+      top: 0;
+      left: 0;
+    }
+  `]
 })
 export class DiceComponent implements OnInit {
 
@@ -13,7 +19,8 @@ export class DiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    new AngularLogo();
+    // console.log('DiceComponent.ngOnInit()');
+    const aa = new DiceManager();
   }
 
 }

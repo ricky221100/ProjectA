@@ -5,18 +5,23 @@ import {DiceComponent} from '@views/home/dice/dice.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'dice',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
+    path: 'main',
     component: HomeMainComponent,
     pathMatch: 'full'
   },
   {
     path: 'dice',
     component: DiceComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: 'dice',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'main',
     pathMatch: 'full'
   }
 ];
