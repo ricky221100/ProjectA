@@ -11,7 +11,7 @@ import {MyFabricModule} from '@core/my-fabric/my-fabric.module';
 import { DiceComponent } from './dice/dice.component';
 
 @NgModule({
-  declarations: [HomeMainComponent, DiceComponent],
+    declarations: [HomeMainComponent, DiceComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -22,8 +22,11 @@ import { DiceComponent } from './dice/dice.component';
         CardModule,
         MyFabricModule
     ],
-  providers: [],
-  entryComponents: []
+    providers: [],
+    exports: [
+        DiceComponent
+    ],
+    entryComponents: []
 })
 export class HomeModule {
 }

@@ -12,6 +12,7 @@ import {filter, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class FabricObjStoreEffects {
+
   constructor(
     private readonly actions$: Actions,
     private socket: Socket,

@@ -5,10 +5,10 @@ import {BaseCrudService} from 'ngrx-entity-crud';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class FabricObjService extends BaseCrudService<FabricObj> {
-	protected service = environment.webServiceUri + 'fabric-obj';
+  service = environment.webServiceUri + 'fabric-obj';
 
   constructor(http: HttpClient) {
     super(http);

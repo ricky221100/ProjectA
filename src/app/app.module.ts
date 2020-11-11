@@ -18,29 +18,31 @@ import {ClickOutsideModule} from '@core/directive/click-outside-directive';
 import {CardModule} from 'primeng/card';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import {environment} from '../environments/environment';
+import {HomeModule} from '@views/home/home.module';
 
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    RootStoreModule,
-    HttpClientModule,
-    ConfirmDialogModule,
-    FooterModule,
-    HeaderModule,
-    SlideMenuModule,
-    NgLetModule,
-    ProgressModule,
-    BreadcrumbModule,
-    ClickOutsideModule,
-    CardModule,
-    SocketIoModule.forRoot(environment.socketIoConfig)
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        RootStoreModule,
+        HttpClientModule,
+        ConfirmDialogModule,
+        FooterModule,
+        HeaderModule,
+        SlideMenuModule,
+        NgLetModule,
+        ProgressModule,
+        BreadcrumbModule,
+        ClickOutsideModule,
+        CardModule,
+        SocketIoModule.forRoot(environment.socketIoConfig),
+        HomeModule
+    ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent]
 })

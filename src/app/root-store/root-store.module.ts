@@ -7,7 +7,7 @@ import {RouterStoreModule} from './router-store';
 import {environment} from '../../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {SlideMenuStoreModule} from '@root-store/slide-menu-store';
-import { FabricObjStoreModule } from '@root-store/fabric-obj-store';
+import {FabricObjStoreModule} from '@root-store/fabric-obj-store';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { FabricObjStoreModule } from '@root-store/fabric-obj-store';
     SlideMenuStoreModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
-      runtimeChecks: {strictStateImmutability: true, strictActionImmutability: true}
+      runtimeChecks: {strictStateImmutability: environment.production, strictActionImmutability: true}
     }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

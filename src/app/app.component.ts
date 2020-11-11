@@ -2,6 +2,9 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {RootStoreState, SlideMenuStoreActions, SlideMenuStoreSelectors} from '@root-store/index';
 import {Observable} from 'rxjs';
+import {timeInterval} from 'rxjs/operators';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +13,11 @@ import {Observable} from 'rxjs';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private readonly store$: Store<RootStoreState.State>) {
+  constructor(private readonly store$: Store<RootStoreState.State>, private title:Title) {
   }
 
   open$: Observable<boolean>;
+  test = environment.envName;
 
   @HostListener('document:keydown.escape', ['$event'])
   onMouseup(event: KeyboardEvent) {
@@ -28,6 +32,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.open$ = this.store$.select(SlideMenuStoreSelectors.selectOpen);
+    setInterval(() => {
+      console.log('AppComponent.()');
+      this.title.setTitle(Math.random() * 100 + '');
+    }, 500);
   }
 
 }
